@@ -25,3 +25,27 @@ services:
       - postgres_db
     ports:
       - "9090:8080"
+
+  billingapp-back:
+    build:
+      context: ./java
+      args:
+        - JAR_FILE= *.JAR_FILE
+        - DB_PASSWORD=qwerty
+      container_name: billingapp-back
+      environment:
+        - JAVA_OPTS=
+          -Xms256M
+          -Xms256M
+      depends_on:
+        - postgres_db
+      ports:
+        - 8080:8080
+  
+  billingapp-front:
+    build:
+      context: ./angular
+      container_name: billingapp-front
+      depends_on: billingapp-back
+      ports: 
+        - 80:80
